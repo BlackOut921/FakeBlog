@@ -70,12 +70,11 @@ namespace FakeBlog.Controllers
 			return View(blog);
 		}
 
-		[Authorize]
 		[HttpGet]
 		public IActionResult Delete(int id)
 		{
 			FakeBlogModel? blogToDelete = fakeBlogDbContext.Find<FakeBlogModel>(id);
-            if(blogToDelete != null)
+			if (blogToDelete != null)
 			{
 				fakeBlogDbContext.Remove<FakeBlogModel>(blogToDelete);
 				fakeBlogDbContext.SaveChanges();

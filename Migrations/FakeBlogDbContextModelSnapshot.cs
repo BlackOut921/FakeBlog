@@ -22,7 +22,7 @@ namespace FakeBlog.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FakeBlog.Models.FakeBlogModel", b =>
+            modelBuilder.Entity("FakeBlog.Models.Blog.FakeBlogModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -82,6 +82,14 @@ namespace FakeBlog.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Master",
+                            NormalizedName = "MASTER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -172,6 +180,22 @@ namespace FakeBlog.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "ddf59c17-208c-4a27-b82e-5d81449a3ce4",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedUserName = "MASTER",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMAJqkD4WlS04BMyJz2Ir/b7NMTWpFOgNElmzM1VE9tGW6wH1L4uTl1ffqu8GUFhWA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50b8767e-1a06-420e-885b-f7d9ca3443d0",
+                            TwoFactorEnabled = false,
+                            UserName = "Master"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -234,6 +258,13 @@ namespace FakeBlog.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FakeBlog.Migrations
 {
     /// <inheritdoc />
-    public partial class _init : Migration
+    public partial class FluffySquirrelDbInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -173,6 +173,21 @@ namespace FakeBlog.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "1", null, "Master", "MASTER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1", 0, "ddf59c17-208c-4a27-b82e-5d81449a3ce4", null, false, false, null, null, "MASTER", "AQAAAAIAAYagAAAAEMAJqkD4WlS04BMyJz2Ir/b7NMTWpFOgNElmzM1VE9tGW6wH1L4uTl1ffqu8GUFhWA==", null, false, "50b8767e-1a06-420e-885b-f7d9ca3443d0", false, "Master" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "1", "1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

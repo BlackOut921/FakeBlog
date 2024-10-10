@@ -1,0 +1,22 @@
+﻿@using FakeBlog.Models.Blog
+@model FakeBlogModel
+
+@{
+	ViewData["Title"] = "Blog Edit";
+}
+
+<h1 class="display-1">@Model.Title</h1>
+<p class="lead">@Model.Content</p>
+
+@* Is user logged in and authenticated? *@
+@if (User.Identity != null && User.Identity.IsAuthenticated)
+{
+	@* Does username == author name *@
+	@if (User.Identity.Name == Model.Author)
+	{
+		<div class="d-flex justify-content-end gap-3 border-top p-3">
+			<a href="#" class="btn btn-primary">Edit</a>
+			<a asp-controller="Blog" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+		</div>
+	}
+}

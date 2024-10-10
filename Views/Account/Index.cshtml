@@ -1,0 +1,10 @@
+﻿@{
+	ViewData["Title"] = "Account Index";
+}
+
+<h1 class="display-1">@ViewData["Title"]</h1>
+<p>Logged in as: @User.Identity?.Name</p>
+<a asp-controller="Account" asp-action="Logout">
+	<i class="bi bi-box-arrow-in-left"></i>
+	Logout
+</a>

@@ -1,0 +1,29 @@
+﻿@using FakeBlog.Models.Blog
+@model FakeBlogModel
+
+@{
+	//
+}
+
+<style>
+	.local-blog-thumbnail {
+		width: max(250px, 25%);
+		height: max(250px, 25%);
+		aspect-ratio: 1/1;
+		transform: scale(100%);
+	}
+
+		.local-blog-thumbnail:hover {
+			transform: scale(101%);
+		}
+</style>
+
+<div class="d-flex flex-column justify-content-between border shadow-sm p-3 bg-light local-blog-thumbnail">
+	<h6 class="display-6">@Model.Title</h6>
+	<p class="lead flex-fill overflow-hidden">@Model.Content</p>
+	<div class="row">
+		<div class="col">@Model.Author</div>
+		<div class="col text-end">@Model.DateCreated.ToShortDateString()</div>
+	</div>
+	<a asp-controller="Blog" asp-action="View" asp-route-id="@Model.Id" class="btn btn-outline-dark">View</a>
+</div>

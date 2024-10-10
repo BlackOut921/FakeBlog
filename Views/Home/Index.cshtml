@@ -1,0 +1,22 @@
+﻿@using FakeBlog.Models.Blog
+@model IEnumerable<FakeBlogModel>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h1 class="display-1 visually-hidden">@ViewData["Title"]</h1>
+@if (Model != null)
+{
+	@if (Model.Count() > 0)
+	{
+		<h2 class="display-2">New Posts This Month</h2>
+		<div class="d-flex flex-row flex-wrap justify-content-center gap-2 mb-3">
+			@foreach (FakeBlogModel blog in Model)
+			{
+				@await Html.PartialAsync("_PartialBlogThumbnail", blog)
+			}
+		</div>
+		<a href="#" class="d-block w-50 mx-auto text-center p-2">See more</a>
+	}
+}

@@ -1,0 +1,78 @@
+# NuGet Packages
+    Microsoft.AspNetCore.Identity.EntityFrameworkCore
+    Microsoft.EntityFrameworkCore.SqlServer
+    Microsoft.EntityFrameworkCore.Tools
+
+# DbContext
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+
+    namespace webapp_identity.Areas.Account.Models
+    {
+        public class UserDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+        {
+            public UserDbContext(DbContextOptions options)
+             : base(options)
+            {
+            }
+
+            protected override void OnModelCreating(ModelBuilder builder)
+            {
+                base.OnModelCreating(builder);
+
+                //Seed user
+		//NEEDS THE NORMALIZED USERNAME/EMAIL TO WORK!!!
+                string _username = "master@master.com";
+                IdentityUser _master = new IdentityUser 
+                {
+                    Id = "1", 
+                    UserName = _username,
+                    NormalizedUserName = _username.ToUpper(),
+                    Email = _username,
+                    NormalizedEmail = _username.ToUpper(),
+                    EmailConfirmed = true, 
+                    LockoutEnabled = false
+                };
+
+                PasswordHasher<IdentityUser> _hash = new PasswordHasher<IdentityUser>();
+                _master.PasswordHash = _hash.HashPassword(_master, "Master123.");
+
+                builder.Entity<IdentityUser>().HasData(_master);
+
+                //Seed role
+                builder.Entity<IdentityRole>().HasData(
+                    new IdentityRole { Id = "1", Name = "Master", NormalizedName = "MASTER" }
+                );
+
+                //Put user in role
+                builder.Entity<IdentityUserRole<string>>().HasData(
+                    new IdentityUserRole<string> { RoleId = "1", UserId = "1"}
+                );
+            }
+        }
+    }
+
+# Program.cs
+    // --- IdentityDbContext ---
+    builder.Services.AddDbContext<UserDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+    //Default authentication scheme
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+
+    builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<UserDbContext>()
+    .AddDefaultTokenProviders();
+
+    //Configure cookies
+    builder.Services.ConfigureApplicationCookie(options => {});
+    
+# Add connection string
+    "ConnectionStrings": {
+        "Default": ""
+    }
+
+# Package Manager Console
+    add-migration _init_
+    update-database

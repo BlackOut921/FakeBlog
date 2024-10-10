@@ -1,0 +1,17 @@
+﻿@charset "utf-8";
+
+body {
+    background-image: url("Images/AdobeStock_422780343.jpeg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.blog-login-form {
+    width: max(30%, 300px);
+}
+
+.blog-item {
+    max-height: 250px;
+}

@@ -1,0 +1,48 @@
+### Connect to database ###
+
+# Nuget packages:
+    Microsoft.EntityFrameworkCore
+    Microsoft.EntityFrameworkCore.SqlServer
+    Microsoft.EntityFrameworkCore.Tools
+
+# Create database context in 'Data' folder
+    using Microsoft.EntityFrameworkCore;
+    public class <name of dbcontext> : DbContext 
+    {
+        public DBContext(DBContextOptions<name of dbcontext> options)
+            : base(options)
+        {
+            //
+        }
+    }
+
+# Create model for database entries
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    public class myModel
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        
+        public string otherProperties { get; set; } = string.Empty;
+    }
+
+# Create connection string in appsettings.json
+!! Can create databse through SQL Server Object Explorer in VS !!
+    "ConnectionStrings": {
+      "Default": ""
+    }
+
+# Add service in Program.cs
+    builder.Services.AddDbContext<name of dbcontext>(
+	options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+# Migrations from 'PackageManagerConsole'
+    add-migration <migration name>
+# Update database to build it
+    update-database
+
+# //How to add to database
+# //How to retreive from (query)

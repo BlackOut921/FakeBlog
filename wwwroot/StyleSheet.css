@@ -36,5 +36,5 @@ body {
 }
 
     .nav-link:hover {
-        background-color: rgb(100, 100, 100);
+        background-color: rgba(50, 50, 50, 20%);
     }

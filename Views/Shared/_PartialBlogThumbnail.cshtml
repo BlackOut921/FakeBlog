@@ -18,8 +18,8 @@
 		}
 </style>
 
-<a asp-controller="Blog" asp-action="View" asp-route-id="@Model.Id" class="link-dark text-decoration-none">
-	<div class="d-flex flex-column justify-content-between border shadow-sm p-3 rounded-3 bg-light bg-gradient local-blog-thumbnail">
+<a asp-controller="Blog" asp-action="View" asp-route-id="@Model.Id" class="link-dark text-decoration-none col">
+	<div class="d-flex flex-column justify-content-between border shadow-sm p-3 rounded-3 bg-light bg-gradient">
 		<h6 class="display-6">@Model.Title</h6>
 		<p class="lead flex-fill overflow-hidden">@Model.Content</p>
 		<div class="row mb-3">

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FakeBlog.Controllers
 {
 	public class BlogController(
-		UserManager<IdentityUser> _userManager, 
+		UserManager<IdentityUser> _userManager,
 		FakeBlogDbContext _fakeBlogDbContext) : Controller
 	{
 		private readonly UserManager<IdentityUser> userManager = _userManager;
@@ -20,7 +20,7 @@ namespace FakeBlog.Controllers
 			//Get current user
 			IdentityUser? currentUser = await userManager.GetUserAsync(User);
 
-			if(currentUser != null)
+			if (currentUser != null)
 			{
 				//Get blogs with username/id
 				IEnumerable<FakeBlogModel> blogs = fakeBlogDbContext.Blogs
@@ -64,11 +64,8 @@ namespace FakeBlog.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public IActionResult View(int id)
-		{
-			FakeBlogModel? blog = fakeBlogDbContext.Find<FakeBlogModel>(id);
-			return View(blog);
-		}
+		public IActionResult View(int id) =>
+			View(fakeBlogDbContext.Find<FakeBlogModel>(id));
 
 		[HttpGet]
 		public IActionResult Delete(int id)
@@ -83,6 +80,21 @@ namespace FakeBlog.Controllers
 			}
 
 			return View();
+		}
+
+		[HttpGet]
+		public IActionResult Report(int id)
+		{
+			FakeBlogModel? blog = fakeBlogDbContext.Find<FakeBlogModel>(id);
+			FakeBlogReportModel report = new() { Blog = blog };
+
+			return View(report);
+		}
+
+		[HttpPost]
+		public JsonResult Report(FakeBlogReportModel model)
+		{
+			return Json(model);
 		}
 	}
 }

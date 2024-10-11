@@ -32,7 +32,7 @@ namespace FakeBlog.Controllers
 					model.Username, model.Password, model.RememberMe, false);
 
 				if (result.Succeeded)
-					return RedirectToAction("Index", "Blog");
+					return RedirectToAction("Index", "Home");
 			}
 
 			ModelState.AddModelError(string.Empty, "Login error");

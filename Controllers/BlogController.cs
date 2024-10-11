@@ -86,7 +86,12 @@ namespace FakeBlog.Controllers
 		public IActionResult Report(int id)
 		{
 			FakeBlogModel? blog = fakeBlogDbContext.Find<FakeBlogModel>(id);
-			FakeBlogReportModel report = new() { Blog = blog };
+			FakeBlogReportModel report = new()
+			{
+				BlogId = blog != null ? blog.BlogId : -1,
+				BlogTitle = blog?.Title ?? "",
+				BlogContent = blog?.Content ?? ""
+			};
 
 			return View(report);
 		}
@@ -94,6 +99,11 @@ namespace FakeBlog.Controllers
 		[HttpPost]
 		public JsonResult Report(FakeBlogReportModel model)
 		{
+			if(ModelState.IsValid)
+			{
+				//
+			}
+
 			return Json(model);
 		}
 	}

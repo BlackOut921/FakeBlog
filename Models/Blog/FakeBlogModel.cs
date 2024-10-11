@@ -6,7 +6,7 @@ namespace FakeBlog.Models.Blog
     public class FakeBlogModel
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int BlogId { get; set; }
 
         [Display(Name = "Author")]
         [DataType(DataType.Text)]

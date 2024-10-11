@@ -6,11 +6,21 @@ namespace FakeBlog.Models.Blog
 	public class FakeBlogReportModel
 	{
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int Id { get; set; }
+		public int ReportId { get; set; }
 
 		[Required]
 		[Display(Name = "Blog Id")]
-		public FakeBlogModel? Blog { get; set; } = null;
+		public int BlogId { get; set; }
+
+		[Required]
+		[Display(Name = "Blog Title")]
+		[DataType(DataType.Text)]
+		public string BlogTitle { get; set; } = string.Empty;
+
+		[Required]
+		[Display(Name = "Blog Content")]
+		[DataType(DataType.Text)]
+		public string BlogContent { get; set; } = string.Empty;
 
 		[Required]
 		[Display(Name = "Reason to report")]

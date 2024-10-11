@@ -1,11 +1,12 @@
 ﻿@charset "utf-8";
 
 body {
-    background-image: url("Images/AdobeStock_422780343.jpeg");
+    background-image: url("Images/AdobeStock_127455176.jpeg");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    backdrop-filter: blur(4px);
 }
 
 .blog-login-form {
@@ -15,3 +16,25 @@ body {
 .blog-item {
     max-height: 250px;
 }
+
+.observer-target {
+    opacity: 0;
+    transition: 0.5s;
+    transition-delay: 0;
+}
+
+    .observer-target.show {
+        opacity: 1;
+    }
+
+.observer-target-delay-1 {
+    transition-delay: 0.25s;
+}
+
+.nav-link {
+    background-color: transparent;
+}
+
+    .nav-link:hover {
+        background-color: rgb(100, 100, 100);
+    }

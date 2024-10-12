@@ -74,16 +74,5 @@ namespace FakeBlog.Controllers
 			await signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home");
 		}
-
-		[HttpGet]
-		[Authorize]
-		public IActionResult MyBlogs()
-		{
-			//Get current user
-			System.Security.Claims.ClaimsPrincipal currentUserClaim = User;
-			string? currentUserId = userManager.GetUserId(currentUserClaim);
-
-			return View();
-		}
 	}
 }

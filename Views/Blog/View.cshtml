@@ -4,7 +4,7 @@
 @{
 	ViewData["Title"] = "Blog Edit";
 	bool userLoggedIn = User.Identity != null && User.Identity.IsAuthenticated;
-	bool userIsAuthor = userLoggedIn && User.Identity?.Name == Model.Author;
+	bool userIsAuthor = userLoggedIn && User.Identity?.Name == Model?.Author;
 }
 
 <div class="bg-light border p-3">

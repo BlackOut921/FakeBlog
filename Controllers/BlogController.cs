@@ -1,4 +1,6 @@
-﻿using FakeBlog.Models;
+﻿using System.Threading.Tasks.Dataflow;
+
+using FakeBlog.Models;
 using FakeBlog.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -90,11 +92,25 @@ namespace FakeBlog.Controllers
 
 		[HttpPost]
 		[Authorize]
-		public IActionResult Edit(FakeBlogModel model)
+		public async Task<IActionResult> Edit(FakeBlogModel model)
 		{
 			if(ModelState.IsValid)
 			{
-				return Json(model);
+				//Get blog from database
+				FakeBlogModel? blogToUpdate = await fakeBlogDbContext.Blogs.FirstOrDefaultAsync(i => i.BlogId == model.BlogId);
+				if(blogToUpdate != null)
+				{
+					//Update required fields
+					blogToUpdate.Title = model.Title;
+					blogToUpdate.Content = model.Content;
+					blogToUpdate.LastUpdated = DateTime.Now;
+
+					//Save database
+					await fakeBlogDbContext.SaveChangesAsync();
+
+					//Unknown error atm
+					return RedirectToAction("View", model.BlogId);
+				}
 			}
 
 			ModelState.AddModelError(string.Empty, "error");

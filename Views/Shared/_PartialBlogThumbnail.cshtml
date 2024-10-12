@@ -7,10 +7,8 @@
 
 <style>
 	.local-blog-thumbnail {
-		width: max(250px, 25%);
-		height: max(250px, 25%);
-		aspect-ratio: 1/1;
 		transform: scale(100%);
+		height: 250px;
 	}
 
 		.local-blog-thumbnail:hover {
@@ -19,8 +17,8 @@
 </style>
 
 <a asp-controller="Blog" asp-action="View" asp-route-id="@Model.BlogId" class="link-dark text-decoration-none col">
-	<div class="d-flex flex-column justify-content-between border shadow-sm p-3 rounded-3 bg-light bg-gradient">
-		<h6 class="display-6">@Model.Title</h6>
+	<div class="d-flex flex-column justify-content-between border shadow-sm p-3 bg-light bg-gradient">
+		<h6 class="display-6 text-break">@Model.Title</h6>
 		<p class="lead flex-fill overflow-hidden">@Model.Content</p>
 		<div class="row mb-3">
 			<div class="col">@Model.Author</div>

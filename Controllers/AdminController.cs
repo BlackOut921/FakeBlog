@@ -10,7 +10,6 @@ namespace FakeBlog.Controllers
 	{
 		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;
 
-		public IActionResult Index() => 
-			View(fakeBlogDbContext.Reports);
+		public IActionResult Index() => View();
 	}
 }

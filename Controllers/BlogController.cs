@@ -3,6 +3,7 @@ using FakeBlog.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace FakeBlog.Controllers
 {
@@ -64,17 +65,17 @@ namespace FakeBlog.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public IActionResult View(int id) =>
-			View(fakeBlogDbContext.Find<FakeBlogModel>(id));
+		public async Task<IActionResult> View(int id) =>
+			View(await fakeBlogDbContext.Blogs.FirstOrDefaultAsync(i => i.BlogId == id));
 
 		[HttpGet]
-		public IActionResult Delete(int id)
+		public async Task<IActionResult> Delete(int id)
 		{
 			FakeBlogModel? blogToDelete = fakeBlogDbContext.Find<FakeBlogModel>(id);
 			if (blogToDelete != null)
 			{
 				fakeBlogDbContext.Remove<FakeBlogModel>(blogToDelete);
-				fakeBlogDbContext.SaveChanges();
+				await fakeBlogDbContext.SaveChangesAsync();
 
 				return RedirectToAction("Index");
 			}
@@ -83,28 +84,21 @@ namespace FakeBlog.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult Report(int id)
-		{
-			FakeBlogModel? blog = fakeBlogDbContext.Find<FakeBlogModel>(id);
-			FakeBlogReportModel report = new()
-			{
-				BlogId = blog != null ? blog.BlogId : -1,
-				BlogTitle = blog?.Title ?? "",
-				BlogContent = blog?.Content ?? ""
-			};
-
-			return View(report);
-		}
+		[Authorize]
+		public async Task<IActionResult> Edit(int id) =>
+			View(await fakeBlogDbContext.Blogs.FirstOrDefaultAsync(i => i.BlogId == id));
 
 		[HttpPost]
-		public JsonResult Report(FakeBlogReportModel model)
+		[Authorize]
+		public IActionResult Edit(FakeBlogModel model)
 		{
 			if(ModelState.IsValid)
 			{
-				//
+				return Json(model);
 			}
 
-			return Json(model);
+			ModelState.AddModelError(string.Empty, "error");
+			return View(model);
 		}
 	}
 }

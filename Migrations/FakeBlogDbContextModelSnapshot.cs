@@ -24,11 +24,11 @@ namespace FakeBlog.Migrations
 
             modelBuilder.Entity("FakeBlog.Models.Blog.FakeBlogModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogId"));
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -52,29 +52,35 @@ namespace FakeBlog.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BlogId");
 
                     b.ToTable("Blogs");
                 });
 
             modelBuilder.Entity("FakeBlog.Models.Blog.FakeBlogReportModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ReportId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
+
+                    b.Property<string>("BlogContent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("BlogId")
                         .HasColumnType("int");
+
+                    b.Property<string>("BlogTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("BlogId");
+                    b.HasKey("ReportId");
 
                     b.ToTable("Reports");
                 });
@@ -208,13 +214,13 @@ namespace FakeBlog.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a69cfcf3-2132-4f13-b05c-01e616b9d84e",
+                            ConcurrencyStamp = "ae26002e-109e-4cf8-8a0f-98e750aac85d",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "MASTER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFpIR9s0uZJ6tbphdwpCIRpQHkVblIV5fjmbGzOqdBbYG3udQoFHCD+3oFVg8yBZNg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMWYzFlwv6z+uxIgyjLXLPtpOLGp68X09kSDYm7WBBsRJlAXK2AdQtqEnXchWn5t5g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9e632bc7-406b-4327-94a6-0433b2b0a00f",
+                            SecurityStamp = "9792761a-9325-4235-8f88-e19352de0634",
                             TwoFactorEnabled = false,
                             UserName = "Master"
                         });
@@ -306,17 +312,6 @@ namespace FakeBlog.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("FakeBlog.Models.Blog.FakeBlogReportModel", b =>
-                {
-                    b.HasOne("FakeBlog.Models.Blog.FakeBlogModel", "Blog")
-                        .WithMany()
-                        .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blog");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks.Dataflow;
 
 using FakeBlog.Models;
+using FakeBlog.Models.Account;
 using FakeBlog.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FakeBlog.Controllers
 {
-	public class BlogController(
+    public class BlogController(
 		UserManager<IdentityUser> _userManager,
 		FakeBlogDbContext _fakeBlogDbContext) : Controller
 	{
@@ -68,7 +69,7 @@ namespace FakeBlog.Controllers
 		[AllowAnonymous]
 		[HttpGet]
 		public async Task<IActionResult> View(int id) =>
-			View(await fakeBlogDbContext.Blogs.FirstOrDefaultAsync(i => i.BlogId == id));
+			View(await fakeBlogDbContext.FindAsync<FakeBlogModel>(id));
 
 		[HttpGet]
 		public async Task<IActionResult> Delete(int id)
@@ -88,7 +89,7 @@ namespace FakeBlog.Controllers
 		[HttpGet]
 		[Authorize]
 		public async Task<IActionResult> Edit(int id) =>
-			View(await fakeBlogDbContext.Blogs.FirstOrDefaultAsync(i => i.BlogId == id));
+			View(await fakeBlogDbContext.FindAsync<FakeBlogModel>(id));
 
 		[HttpPost]
 		[Authorize]
@@ -97,7 +98,7 @@ namespace FakeBlog.Controllers
 			if(ModelState.IsValid)
 			{
 				//Get blog from database
-				FakeBlogModel? blogToUpdate = await fakeBlogDbContext.Blogs.FirstOrDefaultAsync(i => i.BlogId == model.BlogId);
+				FakeBlogModel? blogToUpdate = await fakeBlogDbContext.FindAsync<FakeBlogModel>(model.BlogId);
 				if(blogToUpdate != null)
 				{
 					//Update required fields
@@ -109,12 +110,26 @@ namespace FakeBlog.Controllers
 					await fakeBlogDbContext.SaveChangesAsync();
 
 					//Unknown error atm
-					return RedirectToAction("View", model.BlogId);
+					return RedirectToAction("Index");
 				}
 			}
 
 			ModelState.AddModelError(string.Empty, "error");
 			return View(model);
+		}
+
+		[HttpGet]
+		public IActionResult Profile(string id)
+		{
+			FakeBlogUserAccountModel profile = new()
+			{
+				AuthorId = id,
+				Blogs = fakeBlogDbContext.Blogs
+					.Where(i => i.AuthorId == id)
+					.OrderBy(i => i.LastUpdated)
+			};
+
+			return View(profile);
 		}
 	}
 }

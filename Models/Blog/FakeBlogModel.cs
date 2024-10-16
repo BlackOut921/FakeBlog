@@ -16,7 +16,7 @@ namespace FakeBlog.Models.Blog
         [Required]
         [Display(Name = "Author Id")]
         [DataType(DataType.Text)]
-        public string AuthorId { get; set; } = string.Empty;
+        public string AuthorId { get; set; } = string.Empty; //Id for Identity (string)
 
         [Required]
         [Display(Name = "Title")]

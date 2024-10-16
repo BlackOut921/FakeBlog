@@ -57,34 +57,6 @@ namespace FakeBlog.Migrations
                     b.ToTable("Blogs");
                 });
 
-            modelBuilder.Entity("FakeBlog.Models.Blog.FakeBlogReportModel", b =>
-                {
-                    b.Property<int>("ReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
-
-                    b.Property<string>("BlogContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BlogId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("BlogTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ReportId");
-
-                    b.ToTable("Reports");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -214,13 +186,13 @@ namespace FakeBlog.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ae26002e-109e-4cf8-8a0f-98e750aac85d",
+                            ConcurrencyStamp = "1542c690-9514-4ca1-856e-0918e3234ae9",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "MASTER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMWYzFlwv6z+uxIgyjLXLPtpOLGp68X09kSDYm7WBBsRJlAXK2AdQtqEnXchWn5t5g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGl17pKOTC+RQFZJ5SDLqt+bhUtHfJ0cSC0SJZTxMTxL1BGpngnrY0WdiYMVi98xuQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9792761a-9325-4235-8f88-e19352de0634",
+                            SecurityStamp = "a1132d61-d019-4c36-b4b1-b5a1421e27f4",
                             TwoFactorEnabled = false,
                             UserName = "Master"
                         });

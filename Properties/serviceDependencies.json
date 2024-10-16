@@ -3,6 +3,11 @@
     "mssql1": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:Default"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:AzureDb",
+      "dynamicId": null
     }
   }
 }

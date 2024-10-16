@@ -2,19 +2,16 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-using FakeBlog.Models;
 using FakeBlog.Models.Account;
 
 namespace FakeBlog.Controllers
 {
     public class AccountController(
 		SignInManager<IdentityUser> _signInManager, 
-		UserManager<IdentityUser> _userManager, 
-		FakeBlogDbContext _fakeBlogDbContext) : Controller
+		UserManager<IdentityUser> _userManager) : Controller
 	{
 		private readonly SignInManager<IdentityUser> signInManager = _signInManager;
 		private readonly UserManager<IdentityUser> userManager = _userManager;
-		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;
 
 		[Authorize]
 		public IActionResult Index() => View();
@@ -48,6 +45,8 @@ namespace FakeBlog.Controllers
 		{
 			if(ModelState.IsValid)
 			{
+				FakeBlogUserAccountModel userModel = new() { UserName = model.Username }; //New
+
 				IdentityUser newUser = new() { UserName = model.Username };
 
 				PasswordHasher<IdentityUser> hasher = new();

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeBlog.Migrations
 {
     [DbContext(typeof(FakeBlogDbContext))]
-    [Migration("20241010172342_FluffySquirrelDbInit")]
-    partial class FluffySquirrelDbInit
+    [Migration("20241016135918_FluffyInit")]
+    partial class FluffyInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ namespace FakeBlog.Migrations
 
             modelBuilder.Entity("FakeBlog.Models.Blog.FakeBlogModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BlogId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogId"));
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -55,7 +55,7 @@ namespace FakeBlog.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("BlogId");
 
                     b.ToTable("Blogs");
                 });
@@ -189,13 +189,13 @@ namespace FakeBlog.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ddf59c17-208c-4a27-b82e-5d81449a3ce4",
+                            ConcurrencyStamp = "1542c690-9514-4ca1-856e-0918e3234ae9",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "MASTER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMAJqkD4WlS04BMyJz2Ir/b7NMTWpFOgNElmzM1VE9tGW6wH1L4uTl1ffqu8GUFhWA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGl17pKOTC+RQFZJ5SDLqt+bhUtHfJ0cSC0SJZTxMTxL1BGpngnrY0WdiYMVi98xuQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "50b8767e-1a06-420e-885b-f7d9ca3443d0",
+                            SecurityStamp = "a1132d61-d019-4c36-b4b1-b5a1421e27f4",
                             TwoFactorEnabled = false,
                             UserName = "Master"
                         });

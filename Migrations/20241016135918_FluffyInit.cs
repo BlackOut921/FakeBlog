@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FakeBlog.Migrations
 {
     /// <inheritdoc />
-    public partial class FluffySquirrelDbInit : Migration
+    public partial class FluffyInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -54,7 +54,7 @@ namespace FakeBlog.Migrations
                 name: "Blogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    BlogId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AuthorId = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -65,7 +65,7 @@ namespace FakeBlog.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
                 });
 
             migrationBuilder.CreateTable(
@@ -182,7 +182,7 @@ namespace FakeBlog.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "ddf59c17-208c-4a27-b82e-5d81449a3ce4", null, false, false, null, null, "MASTER", "AQAAAAIAAYagAAAAEMAJqkD4WlS04BMyJz2Ir/b7NMTWpFOgNElmzM1VE9tGW6wH1L4uTl1ffqu8GUFhWA==", null, false, "50b8767e-1a06-420e-885b-f7d9ca3443d0", false, "Master" });
+                values: new object[] { "1", 0, "1542c690-9514-4ca1-856e-0918e3234ae9", null, false, false, null, null, "MASTER", "AQAAAAIAAYagAAAAEGl17pKOTC+RQFZJ5SDLqt+bhUtHfJ0cSC0SJZTxMTxL1BGpngnrY0WdiYMVi98xuQ==", null, false, "a1132d61-d019-4c36-b4b1-b5a1421e27f4", false, "Master" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

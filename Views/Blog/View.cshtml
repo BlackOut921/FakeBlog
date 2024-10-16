@@ -7,7 +7,7 @@
 	bool userIsAuthor = userLoggedIn && User.Identity?.Name == Model?.Author;
 }
 
-<div class="bg-light border p-3">
+<div class="bg-light bg-gradient border p-3">
 	@if (Model == null)
 	{
 		<p class="lead text-danger">Error loading blog</p>
@@ -24,9 +24,18 @@
 		}
 
 		<h1 class="display-1">@Model.Title</h1>
-		<p class="text-muted">@Model.Author</p>
-		<p class="lead">@Model.Content</p>
-		<p>Posted: @Model.DateCreated</p>
-		<p>Last updated: @Model.LastUpdated</p>
+		<a asp-controller="Blog" asp-action="Profile" asp-route-id="@Model.AuthorId">@Model.Author</a>
+		<p class="lead pb-3 border-bottom">@Model.Content</p>
+
+		<div class="d-flex flex-column flex-md-row justify-content-between">
+			<p>Posted: @Model.DateCreated</p>
+			<p>Last updated: @Model.LastUpdated</p>
+		</div>
+		
+		<div class="text-end">
+			<a asp-controller="Blog" asp-action="Report" asp-route-id="@Model.BlogId" class="btn btn-outline-danger">
+				<i class="bi bi-pen me-1"></i>Report
+			</a>
+		</div>
 	}
 </div>

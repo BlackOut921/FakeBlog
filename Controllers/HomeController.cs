@@ -17,8 +17,8 @@ namespace FakeBlog.Controllers
 		{
 			//Get recent blog posts (last 24hours??)
 			IEnumerable<FakeBlogModel> recentBlogs = fakeBlogDbContext.Blogs
-				.Where(i => i.DateCreated.Month == DateTime.Now.Month)
-				.OrderBy(i => i.DateCreated);
+				.Where(i => i.LastUpdated.Month == DateTime.Now.Month)
+				.OrderBy(i => i.LastUpdated);
 
 			return View(recentBlogs);
 		}

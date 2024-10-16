@@ -1,0 +1,30 @@
+﻿@using FakeBlog.Models.Account
+@model FakeBlogUserAccountModel
+
+@{
+	ViewData["Title"] = "Blog Profile";
+}
+
+<h1 class="display-1 visually-hidden">@ViewData["Title"]</h1>
+<div class="d-flex flex-column flex-md-row align-items-center gap-3 mb-3">
+	<div class="p-5 rounded-circle border bg-light">PP</div>
+	<div class="bg-light flex-fill p-3 rounded-3">
+		<p>Profile of author (<a href="https://www.w3schools.com/w3css/tryw3css_templates_blog.htm">Reference template</a>)</p>
+	</div>
+</div>
+<h2 class="display-2">Blogs</h2>
+@if (Model == null || Model?.Blogs?.Count() == 0)
+{
+	<p class="text-danger">No blogs</p>
+}
+else
+{
+	@foreach (FakeBlogModel blog in Model!.Blogs!)
+	{
+		<div class="p-2 mb-3 bg-light rounded-3">
+			<p>@blog.Title</p>
+			<p>@blog.Content</p>
+			<a asp-controller="Blog" asp-action="View" asp-route-id="@blog.BlogId" class="btn btn-outline-dark">View</a>
+		</div>
+	}
+}

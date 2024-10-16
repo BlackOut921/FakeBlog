@@ -30,6 +30,8 @@ namespace FakeBlog.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,24 +50,6 @@ namespace FakeBlog.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Blogs",
-                columns: table => new
-                {
-                    BlogId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,6 +158,30 @@ namespace FakeBlog.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    BlogId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuthorId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FakeBlogUserModelId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.BlogId);
+                    table.ForeignKey(
+                        name: "FK_Blogs_AspNetUsers_FakeBlogUserModelId",
+                        column: x => x.FakeBlogUserModelId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -181,8 +189,8 @@ namespace FakeBlog.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "1542c690-9514-4ca1-856e-0918e3234ae9", null, false, false, null, null, "MASTER", "AQAAAAIAAYagAAAAEGl17pKOTC+RQFZJ5SDLqt+bhUtHfJ0cSC0SJZTxMTxL1BGpngnrY0WdiYMVi98xuQ==", null, false, "a1132d61-d019-4c36-b4b1-b5a1421e27f4", false, "Master" });
+                columns: new[] { "Id", "AccessFailedCount", "AuthorId", "Bio", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "1", 0, "", "", "d795c21a-adf1-4e85-a9f6-07fa44a15e43", null, false, false, null, null, "MASTER", "AQAAAAIAAYagAAAAEEnBTDxrJlzYUTKQ3pJljboN5jjjuvW7iReiMFB/bid3tWRy2obj1jDO49nAVRQFcw==", null, false, "1ece55a1-1259-4cfb-be05-6bd4d148fb0a", false, "Master" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -227,6 +235,11 @@ namespace FakeBlog.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_FakeBlogUserModelId",
+                table: "Blogs",
+                column: "FakeBlogUserModelId");
         }
 
         /// <inheritdoc />

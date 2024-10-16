@@ -1,11 +1,12 @@
-﻿using FakeBlog.Models.Blog;
+﻿using FakeBlog.Models.Account;
+using FakeBlog.Models.Blog;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FakeBlog.Models
 {
-    public class FakeBlogDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
+    public class FakeBlogDbContext : IdentityDbContext<FakeBlogUserModel, IdentityRole, string>
 	{
 		public DbSet<FakeBlogModel> Blogs { get; set; }
 
@@ -20,10 +21,10 @@ namespace FakeBlog.Models
 			base.OnModelCreating(builder);
 
 			//Create master user
-			IdentityUser masterUser = new() { Id = "1", UserName = "Master", NormalizedUserName = "MASTER" };
-			PasswordHasher<IdentityUser> passwordHasher = new();
+			FakeBlogUserModel masterUser = new() { Id = "1", UserName = "Master", NormalizedUserName = "MASTER", LockoutEnabled = false };
+			PasswordHasher<FakeBlogUserModel> passwordHasher = new();
 			masterUser.PasswordHash = passwordHasher.HashPassword(masterUser, "Master123.");
-			builder.Entity<IdentityUser>().HasData(masterUser);
+			builder.Entity<FakeBlogUserModel>().HasData(masterUser);
 
 			//Create master role
 			builder.Entity<IdentityRole>().HasData(

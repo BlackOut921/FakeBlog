@@ -8,12 +8,10 @@ namespace FakeBlog.Models.Blog
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BlogId { get; set; }
 
-        [Required]
         [Display(Name = "Author")]
         [DataType(DataType.Text)]
         public string Author { get; set; } = string.Empty;
 
-        [Required]
         [Display(Name = "Author Id")]
         [DataType(DataType.Text)]
         public string AuthorId { get; set; } = string.Empty; //Id for Identity (string)
@@ -37,5 +35,8 @@ namespace FakeBlog.Models.Blog
         [Display(Name = "Last Updated")]
         [DataType(DataType.DateTime)]
         public DateTime LastUpdated { get; set; } = DateTime.Now;
+
+        [Display(Name = "Post anonymously")]
+        public bool Anonymous { get; set; } = false;
     }
 }

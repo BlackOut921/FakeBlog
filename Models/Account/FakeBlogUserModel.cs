@@ -4,12 +4,8 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FakeBlog.Models.Account
 {
-    public class FakeBlogUserAccountModel : IdentityUser
+    public class FakeBlogUserModel : IdentityUser
     {
-        [Required]
-        [Display(Name = "AuthorId")]
-        public string AuthorId { get; set; } = string.Empty; //Change to use Id from Identity
-
         [Display(Name = "Bio")]
         public string Bio { get; set; } = string.Empty;
 
@@ -18,7 +14,7 @@ namespace FakeBlog.Models.Account
         public IEnumerable<FakeBlogModel>? Blogs { get; set; }
 
         /* Ideas: 
-         * - Followed accounts
+         * - Followed accounts (strings)
          */
     }
 }

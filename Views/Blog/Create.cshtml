@@ -8,13 +8,13 @@
 <h1 class="display-1">@ViewData["Title"]</h1>
 <form enctype="application/x-www-form-urlencoded" method="post" asp-controller="Blog" asp-action="Create">
 	<div class="text-danger" asp-validation-summary="All"></div>
-	<div class="mb-3 visually-hidden">
+	<div class="mb-3">
 		<label asp-for="@Model.Author" class="form-label">Author</label>
-		<input asp-for="@Model.Author" placeholder="Author name" class="form-control" readonly disabled />
+		<input asp-for="@Model.Author" placeholder="Author name" class="form-control-plaintext" readonly disabled />
 	</div>
-	<div class="mb-3 visually-hidden">
+	<div class="mb-3">
 		<label asp-for="@Model.AuthorId" class="form-label">Author Id</label>
-		<input asp-for="@Model.AuthorId" placeholder="Author Id" class="form-control" readonly disabled />
+		<input asp-for="@Model.AuthorId" placeholder="Author Id" class="form-control-plaintext" readonly disabled />
 	</div>
 	<div class="mb-3">
 		<label asp-for="@Model.Title" class="form-label">Title</label>
@@ -24,13 +24,17 @@
 		<label asp-for="@Model.Content" class="form-label">Content</label>
 		<textarea asp-for="@Model.Content" placeholder="Blog content" rows="5" class="form-control" required></textarea>
 	</div>
-	<div class="mb-3 visually-hidden">
+	<div class="mb-3">
 		<label asp-for="@Model.DateCreated" class="form-label">Date created</label>
-		<input asp-for="@Model.DateCreated" placeholder="Date created" class="form-control" readonly disabled />
+		<input asp-for="@Model.DateCreated" placeholder="Date created" class="form-control-plaintext" readonly disabled />
 	</div>
-	<div class="mb-3 visually-hidden">
+	<div class="mb-3">
 		<label asp-for="@Model.LastUpdated" class="form-label">Last updated</label>
-		<input asp-for="@Model.LastUpdated" placeholder="Last updated" class="form-control" readonly disabled />
+		<input asp-for="@Model.LastUpdated" placeholder="Last updated" class="form-control-plaintext" readonly disabled />
+	</div>
+	<div class="mb-3">
+		<input asp-for="@Model.Anonymous" type="checkbox" class="form-check-input" />
+		<label asp-for="@Model.Anonymous" class="form-check-label">Post anonymously</label>
 	</div>
 	<input type="submit" value="Publish" class="btn btn-primary" />
 </form>

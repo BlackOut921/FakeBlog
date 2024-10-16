@@ -38,17 +38,3 @@ body {
     .nav-link:hover {
         background-color: rgba(50, 50, 50, 20%);
     }
-
-.blog-thumbnail-bg {
-    background-image: url("Images/stacked-peaks-haikei.svg");
-    background-attachment: scroll;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 300px;
-    transform: scale(100%);
-}
-
-    .blog-thumbnail-bg:hover {
-        transform: scale(101%);
-    }

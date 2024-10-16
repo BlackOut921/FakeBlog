@@ -5,12 +5,26 @@
 	//
 }
 
+<style>
+	.blog-thumbnail {
+		height: max(100px, 300px);
+		transform: scale(100%);
+	}
+
+		.blog-thumbnail:hover {
+			transform: scale(101%);
+		}
+</style>
+
 <a asp-controller="Blog" asp-action="View" asp-route-id="@Model.BlogId" class="link-dark text-decoration-none col">
-	<div class="d-flex flex-column justify-content-between shadow p-3 blog-thumbnail-bg">
+	<div class="d-flex flex-column justify-content-between shadow p-3 bg-light bg-gradient blog-thumbnail">
 		<h6 class="display-6 text-break">@Model.Title</h6>
 		<p class="lead flex-fill overflow-hidden">@Model.Content</p>
 		<div class="row mb-3">
-			<div class="col">@Model.Author</div>
+			@if (!Model.Anonymous)
+			{
+				<div class="col">@Model.Author</div>
+			}
 			<div class="col text-end">@Model.DateCreated.ToShortDateString()</div>
 		</div>
 	</div>

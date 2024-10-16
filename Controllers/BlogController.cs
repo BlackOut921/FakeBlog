@@ -1,20 +1,17 @@
-﻿using System.Threading.Tasks.Dataflow;
-
-using FakeBlog.Models;
+﻿using FakeBlog.Models;
 using FakeBlog.Models.Account;
 using FakeBlog.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FakeBlog.Controllers
 {
     public class BlogController(
-		UserManager<IdentityUser> _userManager,
+		UserManager<FakeBlogUserModel> _userManager,
 		FakeBlogDbContext _fakeBlogDbContext) : Controller
 	{
-		private readonly UserManager<IdentityUser> userManager = _userManager;
+		private readonly UserManager<FakeBlogUserModel> userManager = _userManager;
 		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;
 
 		[Authorize]
@@ -22,7 +19,7 @@ namespace FakeBlog.Controllers
 		public async Task<IActionResult> Index()
 		{
 			//Get current user
-			IdentityUser? currentUser = await userManager.GetUserAsync(User);
+			FakeBlogUserModel? currentUser = await userManager.GetUserAsync(User);
 
 			if (currentUser != null)
 			{
@@ -46,10 +43,12 @@ namespace FakeBlog.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				//Get current username and id
-				IdentityUser? currentUser = await userManager.GetUserAsync(User);
-				model.Author = currentUser?.UserName ?? "NULL";
-				model.AuthorId = currentUser?.Id ?? "000";
+				//Get current
+				FakeBlogUserModel? currentUser = await userManager.GetUserAsync(User);
+
+				//username shouldnt be null, need account and log in to post anything
+				model.Author = currentUser?.UserName ?? "null username";
+				model.AuthorId = currentUser?.Id ?? "null id";
 
 				//Set blog create/lastUpdate time
 				model.DateCreated = DateTime.Now;
@@ -105,6 +104,7 @@ namespace FakeBlog.Controllers
 					blogToUpdate.Title = model.Title;
 					blogToUpdate.Content = model.Content;
 					blogToUpdate.LastUpdated = DateTime.Now;
+					blogToUpdate.Anonymous = model.Anonymous;
 
 					//Save database
 					await fakeBlogDbContext.SaveChangesAsync();
@@ -121,9 +121,8 @@ namespace FakeBlog.Controllers
 		[HttpGet]
 		public IActionResult Profile(string id)
 		{
-			FakeBlogUserAccountModel profile = new()
+			FakeBlogUserModel profile = new()
 			{
-				AuthorId = id,
 				Blogs = fakeBlogDbContext.Blogs
 					.Where(i => i.AuthorId == id)
 					.OrderBy(i => i.LastUpdated)

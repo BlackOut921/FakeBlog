@@ -1,10 +1,51 @@
-﻿@{
+﻿@using FakeBlog.Models.Blog
+@using FakeBlog.Models.Account
+@model FakeBlogUserModel
+
+@{
 	ViewData["Title"] = "Account Index";
 }
 
-<h1 class="display-1">@ViewData["Title"]</h1>
-<p>Logged in as: @User.Identity?.Name</p>
-<a asp-controller="Account" asp-action="Logout">
-	<i class="bi bi-box-arrow-in-left"></i>
-	Logout
-</a>
+<style>
+	.blog-user-img {
+		width: 150px;
+		height: 150px;
+		aspect-ratio: 1 / 1;
+	}
+</style>
+
+<h1 class="display-1 visually-hidden">@ViewData["Title"]</h1>
+
+<!-- Profile -->
+<div class="d-flex flex-row align-items-center gap-3 mb-3 bg-light p-3">
+	<div class="blog-user-img d-flex justify-content-center align-items-center rounded-circle border bg-dark text-light">PP</div>
+	<div class="flex-fill">
+		<p>@(Model?.UserName ?? "No username")</p>
+		<p class="text-muted">@(Model?.Bio ?? "No bio")</p>
+	</div>
+	<button type="button" class="btn btn-outline-dark">Follow</button>
+</div>
+
+<h2 class="display-2">Blogs</h2>
+@if (Model == null || Model.Blogs?.Count() == 0)
+{
+	<p class="text-danger">No blogs</p>
+}
+else
+{
+	<div class="p-2 row row-cols-1">
+		@foreach (FakeBlogModel blog in Model.Blogs!)
+		{
+			@if (!blog.Anonymous || blog.Author == User.Identity?.Name)
+			{
+				<div class="p-2 mb-3 bg-light">
+					<p>@blog.Title</p>
+					<p>@blog.Content</p>
+					<a asp-controller="Blog" asp-action="View" asp-route-id="@blog.BlogId" class="btn btn-outline-dark">
+						View
+					</a>
+				</div>
+			}
+		}
+	</div>
+}

@@ -3,22 +3,42 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 using FakeBlog.Models.Account;
+using FakeBlog.Models;
+using FakeBlog.Models.Blog;
 
 namespace FakeBlog.Controllers
 {
     public class AccountController(
-		SignInManager<IdentityUser> _signInManager, 
-		UserManager<IdentityUser> _userManager) : Controller
+		SignInManager<FakeBlogUserModel> _signInManager, 
+		UserManager<FakeBlogUserModel> _userManager,
+		FakeBlogDbContext _fakeBlogDbContext) : Controller
 	{
-		private readonly SignInManager<IdentityUser> signInManager = _signInManager;
-		private readonly UserManager<IdentityUser> userManager = _userManager;
+		private readonly SignInManager<FakeBlogUserModel> signInManager = _signInManager;
+		private readonly UserManager<FakeBlogUserModel> userManager = _userManager;
+		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;
 
+		[HttpGet]
 		[Authorize]
-		public IActionResult Index() => View();
+		public async Task<IActionResult> Index(string id)
+		{
+			//Find user by id first then by username if null
+			FakeBlogUserModel? userProfile = await userManager.FindByIdAsync(id);
+			if (userProfile == null)
+				userProfile = await userManager.FindByNameAsync(id);
+
+			if(userProfile != null)
+			{
+				//Get user blogs
+				userProfile.Blogs = fakeBlogDbContext.Blogs.Where(i => i.AuthorId == userProfile.Id);
+			}
+
+			return View(userProfile);
+		}
 
 		[HttpGet]
 		[AllowAnonymous]
-		public IActionResult Login() => View();
+		public IActionResult Login() => 
+			View();
 
 		[HttpPost]
 		public async Task<IActionResult> Login(FakeBlogUserLoginModel model)
@@ -38,27 +58,23 @@ namespace FakeBlog.Controllers
 
 		[HttpGet]
 		[AllowAnonymous]
-		public IActionResult Register() => View();
+		public IActionResult Register() => 
+			View();
 
 		[HttpPost]
 		public async Task<IActionResult> Register(FakeBlogUserRegisterModel model)
 		{
 			if(ModelState.IsValid)
 			{
-				FakeBlogUserAccountModel userModel = new() { UserName = model.Username }; //New
+				FakeBlogUserModel userModel = new() { UserName = model.Username };
+				PasswordHasher<FakeBlogUserModel> hasher = new();
+				userModel.PasswordHash = hasher.HashPassword(userModel, model.Password);
 
-				IdentityUser newUser = new() { UserName = model.Username };
-
-				PasswordHasher<IdentityUser> hasher = new();
-				newUser.PasswordHash = hasher.HashPassword(newUser, model.Password);
-
-				IdentityResult result = await userManager.CreateAsync(newUser, model.Password);
+				IdentityResult result = await userManager.CreateAsync(userModel, model.Password);
 				if(result.Succeeded)
-				{
 					return RedirectToAction("Login");
-				}
 
-				foreach(IdentityError error in result.Errors)
+				foreach (IdentityError error in result.Errors)
 					ModelState.AddModelError(string.Empty, error.Description);
 
 				return View(model);
@@ -73,5 +89,10 @@ namespace FakeBlog.Controllers
 			await signInManager.SignOutAsync();
 			return RedirectToAction("Index", "Home");
 		}
+
+		[HttpGet]
+		[Authorize]
+		public IActionResult Settings() => 
+			View();
 	}
 }

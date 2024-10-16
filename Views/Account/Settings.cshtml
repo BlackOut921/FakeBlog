@@ -1,0 +1,40 @@
+﻿@{
+	ViewData["Title"] = "Account Settings";
+}
+
+<style>
+	.blog-setting-thumb {
+		width: 200px;
+		height: 200px;
+		display: grid;
+		place-items: center;
+		text-align: center;
+		transform: scale(100%);
+	}
+
+		.blog-setting-thumb:hover {
+			transform: scale(101%);
+		}
+</style>
+
+<h1 class="display-1">@ViewData["Title"]</h1>
+<p>Logged in as: @User.Identity?.Name</p>
+
+<div class="row row-cols-2 row-cols-md-3 justify-content-around row-gap-3">
+	<a asp-controller="Account" asp-action="Index" asp-route-id="@User.Identity?.Name" title="My Profile" 
+	   class="bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
+		<i class="bi bi-person fs-1"></i>My Profile
+	</a>
+	<a href="#" title="Change Picture" 
+	   class="bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
+		<i class="bi bi-person-bounding-box fs-1"></i>Change Picture
+	</a>
+	<a href="#" title="Change Bio" 
+	   class="bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
+		<i class="bi bi-person fs-1"></i>Change Bio
+	</a>
+	<a asp-controller="Account" asp-action="Logout" title="Logout" 
+	   class="bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
+		<i class="bi bi-box-arrow-in-left fs-1"></i>Logout
+	</a>
+</div>

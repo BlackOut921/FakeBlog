@@ -4,6 +4,7 @@ using FakeBlog.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FakeBlog.Migrations
 {
     [DbContext(typeof(FakeBlogDbContext))]
-    partial class FakeBlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241016194758_RemovedAuthorId")]
+    partial class RemovedAuthorId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -96,13 +99,13 @@ namespace FakeBlog.Migrations
                             Id = "1",
                             AccessFailedCount = 0,
                             Bio = "",
-                            ConcurrencyStamp = "2eac0f50-8963-40fa-8a8e-a2c83c2e036c",
+                            ConcurrencyStamp = "fd85a625-f381-48e6-a8b5-a547a415dd80",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "MASTER",
-                            PasswordHash = "AQAAAAIAAYagAAAAEICt2cP3LjeXfEzJENnyziCDFAWssmD5LQMSyb5rx8hnL5xkcKa7kMdAh3LJcmY3XQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEU56NNKtV9K5dZZTmqneqaoWDbcG+QCCKf6lDpzsUgiElgMuVcCQ3ERlm44LVx5TA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2a789986-cb02-4257-af28-718ce0e86cd4",
+                            SecurityStamp = "d1572af9-01f1-403c-a04a-43340056a59f",
                             TwoFactorEnabled = false,
                             UserName = "Master"
                         });
@@ -115,9 +118,6 @@ namespace FakeBlog.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BlogId"));
-
-                    b.Property<bool>("Anonymous")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Author")
                         .IsRequired()

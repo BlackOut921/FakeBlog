@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FakeBlog.Controllers
 {
-	[Authorize(Roles = "Master, Admin, Mod")]
+	[Authorize(Roles = "Master")]
 	public class AdminController(FakeBlogDbContext _fakeBlogDbContext) : Controller
 	{
 		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;

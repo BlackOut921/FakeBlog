@@ -1,5 +1,9 @@
 ﻿@charset "utf-8";
 
+header {
+    backdrop-filter: blur(10px);
+}
+
 body {
     background-image: url("Images/AdobeStock_127455176.jpeg");
     background-attachment: fixed;
@@ -37,4 +41,12 @@ body {
 
     .nav-link:hover {
         background-color: rgba(50, 50, 50, 20%);
+    }
+
+.blog-hover-scale {
+    transform: scale(100%);
+}
+
+    .blog-hover-scale:hover {
+        transform: scale(101%);
     }

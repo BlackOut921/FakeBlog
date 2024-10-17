@@ -3,7 +3,6 @@ using FakeBlog.Models.Blog;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FakeBlog.Controllers
 {

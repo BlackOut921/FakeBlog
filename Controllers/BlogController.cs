@@ -117,18 +117,5 @@ namespace FakeBlog.Controllers
 			ModelState.AddModelError(string.Empty, "error");
 			return View(model);
 		}
-
-		[HttpGet]
-		public IActionResult Profile(string id)
-		{
-			FakeBlogUserModel profile = new()
-			{
-				Blogs = fakeBlogDbContext.Blogs
-					.Where(i => i.AuthorId == id)
-					.OrderBy(i => i.LastUpdated)
-			};
-
-			return View(profile);
-		}
 	}
 }

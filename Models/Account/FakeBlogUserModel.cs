@@ -13,8 +13,7 @@ namespace FakeBlog.Models.Account
         [Display(Name = "Blogs")]
         public IEnumerable<FakeBlogModel>? Blogs { get; set; }
 
-        /* Ideas: 
-         * - Followed accounts (strings)
-         */
-    }
+		/*[Display(Name = "Following")]
+        public ICollection<FakeBlogUserModel>? Following { get; set; }*/
+	}
 }

@@ -18,7 +18,6 @@ namespace FakeBlog.Controllers
 		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;
 
 		[HttpGet]
-		[Authorize]
 		public async Task<IActionResult> Index(string id)
 		{
 			//Find user by id first then by username if null

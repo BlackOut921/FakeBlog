@@ -6,7 +6,7 @@
 }
 
 <h1 class="display-1">@ViewData["Title"]</h1>
-<form enctype="application/x-www-form-urlencoded" method="post" asp-controller="Blog" asp-action="Edit">
+<form asp-controller="Blog" asp-action="Edit" method="post" enctype="application/x-www-form-urlencoded" class="pb-3">
 	<div class="text-danger" asp-validation-summary="All"></div>
 	<div class="mb-3 visually-hidden">
 		<label asp-for="@Model.BlogId" class="form-label">BlogId</label>
@@ -41,5 +41,11 @@
 		<input asp-for="@Model.LastUpdated" placeholder="Last updated" class="form-control-plaintext" readonly />
 	</div>
 	<input type="submit" value="Save Changes" class="btn btn-success" />
-	<a asp-controller="Blog" asp-action="View" asp-route-id="@Model.BlogId" class="btn btn-outline-danger">Cancel</a>
+	<a asp-controller="Blog" asp-action="View" asp-route-id="@Model.BlogId" class="btn btn-outline-dark">Cancel</a>
 </form>
+
+<div class="border-top border-dark py-3 text-end">
+	<a asp-controller="Blog" asp-action="Delete" asp-route-id="@Model.BlogId" class="btn btn-danger">
+		Delete
+	</a>
+</div>

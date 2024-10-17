@@ -23,7 +23,15 @@
 		<p>@(Model?.UserName ?? "No username")</p>
 		<p class="text-muted">@(Model?.Bio ?? "No bio")</p>
 	</div>
-	<button type="button" class="btn btn-outline-dark">Follow</button>
+	@if (Model?.UserName == User.Identity?.Name)
+	{
+		<button type="button" class="btn btn-outline-dark">Edit Profile</button>
+	}
+	else
+	{
+		<input type="checkbox" class="btn-check" id="btnFollow" autocomplete="off" />
+		<label for="btnFollow" class="btn btn-outline-dark" id="btnFollowLabel">Follow</label>
+	}
 </div>
 
 <h2 class="display-2">Blogs</h2>
@@ -33,19 +41,26 @@
 }
 else
 {
-	<div class="p-2 row row-cols-1">
-		@foreach (FakeBlogModel blog in Model.Blogs!)
-		{
-			@if (!blog.Anonymous || blog.Author == User.Identity?.Name)
+	<div class="container">
+		<div class="p-2 row row-cols-1 row-gap-3">
+			@foreach (FakeBlogModel blog in Model.Blogs!)
 			{
-				<div class="p-2 mb-3 bg-light">
-					<p>@blog.Title</p>
-					<p>@blog.Content</p>
-					<a asp-controller="Blog" asp-action="View" asp-route-id="@blog.BlogId" class="btn btn-outline-dark">
-						View
+				@if (!blog.Anonymous || blog.Author == User.Identity?.Name)
+				{
+					<a asp-controller="Blog" asp-action="View" asp-route-id="@blog.BlogId" class="text-reset text-decoration-none shadow p-2 bg-light blog-hover-scale">
+						<p>@blog.Title</p>
+						<p>@blog.Content</p>
 					</a>
-				</div>
+				}
 			}
-		}
+		</div>
 	</div>
 }
+
+<script>
+	const btnFollow = document.getElementById("btnFollow");
+	const btnFollowLabel = document.getElementById("btnFollowLabel");
+	if (btnFollow && btnFollowLabel) {
+		btnFollow.addEventListener("change", () => btnFollowLabel.innerHTML = btnFollow.checked ? "Unfollow" : "Follow");
+	}
+</script>

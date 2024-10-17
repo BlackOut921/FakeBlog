@@ -38,5 +38,25 @@ namespace FakeBlog.Models.Blog
 
         [Display(Name = "Post anonymously")]
         public bool Anonymous { get; set; } = false;
+
+        public string GetDateCreatedString
+        {
+            get
+            {
+                return string.Format(
+                    "{0} {1}", 
+                    DateCreated.ToShortDateString(), DateCreated.ToShortTimeString());
+            }
+        }
+
+        public string GetLastUpdatedString
+        {
+            get
+            {
+                return string.Format(
+                    "{0} {1}", 
+                    LastUpdated.ToShortDateString(), LastUpdated.ToShortTimeString());
+            }
+        }
     }
 }

@@ -1,0 +1,27 @@
+﻿@using FakeBlog.Models.Blog
+@model FakeBlogReportModel
+
+@{
+	ViewData["Title"] = "Blog Report";
+}
+
+<h1 class="display-1 visually-hidden">@ViewData["Title"]</h1>
+<form asp-controller="Blog" asp-action="Report" method="post" class="bg-light bg-opacity-75 p-3">
+	<div class="mb-3 visually-hidden">
+		<label asp-for="@Model.BlogId" class="form-label">BlogId</label>
+		<input asp-for="@Model.BlogId" class="form-control-plaintext" />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.BlogTitle" class="form-label fw-bold">Blog Title</label>
+		<input asp-for="@Model.BlogTitle" class="form-control-plaintext" required />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.BlogContent" class="form-label fw-bold">Blog Content</label>
+		<input asp-for="@Model.BlogContent" class="form-control-plaintext lead" required />
+	</div>
+	<div class="mb-3">
+		<label asp-for="@Model.ReportReason" class="form-label fw-bold">Report Reason</label>
+		<textarea asp-for="@Model.ReportReason" class="form-control" required></textarea>
+	</div>
+	<input type="submit" value="Submit Report" class="btn btn-primary" />
+</form>

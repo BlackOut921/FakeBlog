@@ -35,7 +35,8 @@ namespace FakeBlog.Controllers
 
 		[Authorize]
 		[HttpGet]
-		public IActionResult Create() => View();
+		public IActionResult Create() => 
+			View();
 
 		[Authorize]
 		[HttpPost]
@@ -51,8 +52,7 @@ namespace FakeBlog.Controllers
 				model.AuthorId = currentUser?.Id ?? "null id";
 
 				//Set blog create/lastUpdate time
-				model.DateCreated = DateTime.Now;
-				model.LastUpdated = DateTime.Now;
+				model.LastUpdated = model.DateCreated = DateTime.Now;
 
 				//Add to blog table and save database
 				await fakeBlogDbContext.AddAsync<FakeBlogModel>(model);
@@ -67,17 +67,17 @@ namespace FakeBlog.Controllers
 
 		[AllowAnonymous]
 		[HttpGet]
-		public async Task<IActionResult> View(int id) =>
-			View(await fakeBlogDbContext.FindAsync<FakeBlogModel>(id));
+		public IActionResult Read(int id) =>
+			View(fakeBlogDbContext.Find<FakeBlogModel>(id));
 
 		[HttpGet]
-		public async Task<IActionResult> Delete(int id)
+		public IActionResult Delete(int id)
 		{
 			FakeBlogModel? blogToDelete = fakeBlogDbContext.Find<FakeBlogModel>(id);
 			if (blogToDelete != null)
 			{
 				fakeBlogDbContext.Remove<FakeBlogModel>(blogToDelete);
-				await fakeBlogDbContext.SaveChangesAsync();
+				fakeBlogDbContext.SaveChanges();
 
 				return RedirectToAction("Index");
 			}
@@ -87,17 +87,17 @@ namespace FakeBlog.Controllers
 
 		[HttpGet]
 		[Authorize]
-		public async Task<IActionResult> Edit(int id) =>
-			View(await fakeBlogDbContext.FindAsync<FakeBlogModel>(id));
+		public IActionResult Edit(int id) =>
+			View(fakeBlogDbContext.Find<FakeBlogModel>(id));
 
 		[HttpPost]
 		[Authorize]
-		public async Task<IActionResult> Edit(FakeBlogModel model)
+		public IActionResult Edit(FakeBlogModel model)
 		{
 			if(ModelState.IsValid)
 			{
 				//Get blog from database
-				FakeBlogModel? blogToUpdate = await fakeBlogDbContext.FindAsync<FakeBlogModel>(model.BlogId);
+				FakeBlogModel? blogToUpdate = fakeBlogDbContext.Find<FakeBlogModel>(model.BlogId);
 				if(blogToUpdate != null)
 				{
 					//Update required fields
@@ -107,11 +107,46 @@ namespace FakeBlog.Controllers
 					blogToUpdate.Anonymous = model.Anonymous;
 
 					//Save database
-					await fakeBlogDbContext.SaveChangesAsync();
+					fakeBlogDbContext.SaveChanges();
 
 					//Unknown error atm
 					return RedirectToAction("Index");
 				}
+			}
+
+			ModelState.AddModelError(string.Empty, "error");
+			return View(model);
+		}
+
+		[HttpGet]
+		public IActionResult Report(int id)
+		{
+			FakeBlogModel? blog = fakeBlogDbContext.Find<FakeBlogModel>(id);
+			if(blog != null)
+			{
+				FakeBlogReportModel newReport = new()
+				{
+					BlogId = blog.BlogId,
+					BlogTitle = blog.Title,
+					BlogContent = blog.Content,
+					ReportReason = string.Empty
+				};
+
+				return View(newReport);
+			}
+
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Report(FakeBlogReportModel model)
+		{
+			if (ModelState.IsValid) 
+			{
+				fakeBlogDbContext.Add<FakeBlogReportModel>(model);
+				fakeBlogDbContext.SaveChangesAsync();
+
+				return RedirectToAction("Read", model.BlogId);
 			}
 
 			ModelState.AddModelError(string.Empty, "error");

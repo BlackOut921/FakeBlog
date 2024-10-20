@@ -1,5 +1,6 @@
 ﻿@{
 	ViewData["Title"] = "Account Settings";
+	string thumbClassList = "col bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb";
 }
 
 <style>
@@ -24,22 +25,16 @@
 	<div class="row row-cols-2 row-cols-md-3 justify-content-around row-gap-3">
 		@if (User.IsInRole("Master"))
 		{
-			<a href="#" class="col bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
-				<i class="bi bi-exclamation-triangle fs-1"></i>Reports
+			<a href="#" class="@thumbClassList">
+				<i class="bi bi-exclamation-triangle fs-1 d-block"></i>Reports
 				<span class="badge text-bg-danger">0</span>
 			</a>
 		}
-		<a href="#" title="Change Picture"
-		   class="col bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
-			<i class="bi bi-person-bounding-box fs-1"></i>Change Picture
+		<a asp-controller="Account" asp-action="UpdatePassword" title="Update Password" class="@thumbClassList">
+			<i class="bi bi-key fs-1 d-block"></i>Update Password
 		</a>
-		<a href="#" title="Change Bio"
-		   class="col bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
-			<i class="bi bi-person fs-1"></i>Change Bio
-		</a>
-		<a asp-controller="Account" asp-action="Logout" title="Logout"
-		   class="col bg-light border p-3 link-dark link-underline-opacity-0 link-underline-opacity-75-hover blog-setting-thumb">
-			<i class="bi bi-box-arrow-in-left fs-1"></i>Logout
+		<a asp-controller="Account" asp-action="Logout" title="Logout" class="@thumbClassList">
+			<i class="bi bi-box-arrow-in-left fs-1 d-block"></i>Logout
 		</a>
 	</div>
 </div>

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 using FakeBlog.Models.Account;
 using FakeBlog.Models;
-using FakeBlog.Models.Blog;
 
 namespace FakeBlog.Controllers
 {
@@ -40,6 +39,7 @@ namespace FakeBlog.Controllers
 			View();
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Login(FakeBlogUserLoginModel model)
 		{
 			if(ModelState.IsValid)
@@ -61,6 +61,7 @@ namespace FakeBlog.Controllers
 			View();
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Register(FakeBlogUserRegisterModel model)
 		{
 			if(ModelState.IsValid)
@@ -93,5 +94,32 @@ namespace FakeBlog.Controllers
 		[Authorize]
 		public IActionResult Settings() => 
 			View();
+
+		[HttpGet]
+		[Authorize]
+		public IActionResult UpdatePassword() =>
+			View();
+
+		[HttpPost]
+		[Authorize]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> UpdatePassword(FakeBlogUpdatePasswordModel model)
+		{
+			if(ModelState.IsValid)
+			{
+				FakeBlogUserModel? currentUser = await userManager.GetUserAsync(User);
+				if(currentUser != null)
+				{
+					IdentityResult passwordResult = await userManager.ChangePasswordAsync(currentUser, model.CurrentPassword, model.NewPassword);
+					if (passwordResult.Succeeded)
+						return RedirectToAction("Settings");
+
+					foreach (IdentityError error in passwordResult.Errors)
+						ModelState.AddModelError(string.Empty, error.Description);
+				}
+			}
+
+			return View(model);
+		}
 	}
 }

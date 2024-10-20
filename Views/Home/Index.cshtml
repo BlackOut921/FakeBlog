@@ -19,7 +19,7 @@
 			@foreach (FakeBlogModel blog in Model)
 			{
 				<div class="col">
-					@await Html.PartialAsync("_PartialBlogThumbnail", blog)
+					@await Html.PartialAsync("_PartialBlogTile", blog)
 				</div>
 			}
 		</div>

@@ -1,0 +1,12 @@
+﻿- report system
+
+- comments on posts??
+
+- homepage following posts (if logged in)
+	- username string list??
+	- id string of followed users list (retreive posts from)
+
+- Edit profile picture
+- Edit bio
+
+- Move database to Azure

@@ -9,6 +9,7 @@ namespace FakeBlog.Models
     public class FakeBlogDbContext : IdentityDbContext<FakeBlogUserModel, IdentityRole, string>
 	{
 		public DbSet<FakeBlogModel> Blogs { get; set; }
+		public DbSet<FakeBlogReportModel> Reports { get; set; }
 
 		public FakeBlogDbContext(DbContextOptions<FakeBlogDbContext> options)
 			: base(options)

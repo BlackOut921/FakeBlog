@@ -9,6 +9,7 @@
 	<form method="post" class="border p-3 bg-light mx-auto blog-login-form"
 		  asp-controller="Account" asp-action="Login">
 		<h1 class="display-1 text-center">@ViewData["Title"]</h1>
+		<div asp-validation-summary="All" class="text-danger"></div>
 		<div class="mb-3">
 			<label asp-for="@Model.Username" class="form-label">Username</label>
 			<input asp-for="@Model.Username" class="form-control" required />
@@ -16,6 +17,7 @@
 		<div class="mb-3">
 			<label asp-for="@Model.Password" class="form-label">Password</label>
 			<input asp-for="@Model.Password" class="form-control" required />
+			<a href="#">Forgot Password?</a>
 		</div>
 		<div class="mb-3">
 			<input asp-for="@Model.RememberMe" type="checkbox" class="form-check-input" />
@@ -25,6 +27,5 @@
 		<hr />
 		<p class="text-center">Don't have an account?</p>
 		<a asp-controller="Account" asp-action="Register" class="btn btn-outline-dark mb-3 w-100">Register</a>
-		<div asp-validation-summary="All" class="text-danger"></div>
 	</form>
 </div>

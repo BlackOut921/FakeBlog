@@ -2,12 +2,12 @@
 @model FakeBlogModel
 
 @{
-	ViewData["Title"] = "Blog Edit";
+	ViewData["Title"] = "Blog - " + Model?.Title;
 	bool userLoggedIn = User.Identity != null && User.Identity.IsAuthenticated;
 	bool userIsAuthor = userLoggedIn && User.Identity?.Name == Model?.Author;
 }
 
-<div class="bg-light bg-gradient border p-3">
+<div class="bg-light bg-gradient border p-3 shadow">
 	@if (Model == null)
 	{
 		<p class="lead text-danger">Error loading blog</p>
@@ -36,7 +36,7 @@
 			<p>Last updated: @Model.GetLastUpdatedString</p>
 		</div>
 		<div class="text-end">
-			<a asp-controller="Blog" asp-action="Report" asp-route-id="@Model.BlogId" class="btn btn-outline-danger disabled">
+			<a asp-controller="Blog" asp-action="Report" asp-route-id="@Model.BlogId" class="btn btn-outline-danger">
 				<i class="bi bi-pen me-1"></i>Report
 			</a>
 		</div>

@@ -96,7 +96,12 @@ namespace FakeBlog.Controllers
 		{
 			if(ModelState.IsValid)
 			{
-				//Get blog from database
+				//Update
+				fakeBlogDbContext.Update<FakeBlogModel>(model);
+				fakeBlogDbContext.SaveChanges();
+				return RedirectToAction("Index");
+
+				/*//Get blog from database
 				FakeBlogModel? blogToUpdate = fakeBlogDbContext.Find<FakeBlogModel>(model.BlogId);
 				if(blogToUpdate != null)
 				{
@@ -111,7 +116,7 @@ namespace FakeBlog.Controllers
 
 					//Unknown error atm
 					return RedirectToAction("Index");
-				}
+				}*/
 			}
 
 			ModelState.AddModelError(string.Empty, "error");
@@ -151,6 +156,15 @@ namespace FakeBlog.Controllers
 
 			ModelState.AddModelError(string.Empty, "error");
 			return View(model);
+		}
+
+		private void Join()
+		{
+			IEnumerable<FakeBlogModel> j = fakeBlogDbContext.Users.Join(
+				fakeBlogDbContext.Blogs, //join Tabel1 data to targetTable
+				user => user.Id, //the key column to check from Table1
+				blog => blog.AuthorId, //the key column to check from Table2
+				(user, blog) => new FakeBlogModel { AuthorId = user.Id, BlogId = blog.BlogId }); //the result to return
 		}
 	}
 }

@@ -10,7 +10,7 @@
 	.blog-user-img {
 		width: 150px;
 		height: 150px;
-		aspect-ratio: 1 / 1;
+		aspect-ratio: 1/1;
 	}
 </style>
 
@@ -35,6 +35,11 @@
 </div>
 
 <h2 class="display-2">Blogs</h2>
+<div class="text-center mb-3">
+	<a asp-controller="Blog" asp-action="Create" title="Create new blog" class="btn btn-dark">
+		<i class="bi bi-plus"></i> Create new
+	</a>
+</div>
 @if (Model == null || Model.Blogs?.Count() == 0)
 {
 	<p class="text-danger">No blogs</p>
@@ -47,9 +52,11 @@ else
 			{
 				@if (!blog.Anonymous || blog.Author == User.Identity?.Name)
 				{
-					<a asp-controller="Blog" asp-action="Read" asp-route-id="@blog.BlogId" class="text-reset text-decoration-none shadow p-2 bg-light blog-hover-scale">
+					<a asp-controller="Blog" asp-action="Read" asp-route-id="@blog.BlogId" 
+						class="text-reset text-decoration-none shadow p-2 bg-light blog-hover-scale">
 						<p>@blog.Title</p>
 						<p>@blog.Content</p>
+						<p>@blog.LastUpdated</p>
 					</a>
 				}
 			}

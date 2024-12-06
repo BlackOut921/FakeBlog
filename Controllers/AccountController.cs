@@ -27,7 +27,9 @@ namespace FakeBlog.Controllers
 			if(userProfile != null)
 			{
 				//Get user blogs
-				userProfile.Blogs = fakeBlogDbContext.Blogs.Where(i => i.AuthorId == userProfile.Id);
+				userProfile.Blogs = fakeBlogDbContext.Blogs
+					.Where(i => i.AuthorId == userProfile.Id)
+					.OrderBy(i => i.LastUpdated).Reverse();
 			}
 
 			return View(userProfile);

@@ -22,14 +22,19 @@
 <p>Logged in as: @User.Identity?.Name</p>
 
 <div class="container">
-	<div class="row row-cols-2 row-cols-md-3 justify-content-around row-gap-3">
-		@if (User.IsInRole("Master"))
-		{
-			<a href="#" class="@thumbClassList">
+	@if (User.IsInRole("Master"))
+	{
+		<div class="row row-cols-2 row-cols-md-3 gap-3 mb-3">
+			<a href="#" title="Reports" class="@thumbClassList">
 				<i class="bi bi-exclamation-triangle fs-1 d-block"></i>Reports
 				<span class="badge text-bg-danger">0</span>
 			</a>
-		}
+			<a asp-controller="Admin" asp-action="UserManager" title="User Manager" class="@thumbClassList">
+				<i class="bi bi-person-gear fs-1 d-block"></i>User Manager
+			</a>
+		</div>
+	}
+	<div class="row row-cols-2 row-cols-md-3 gap-3 mb-3">
 		<a asp-controller="Account" asp-action="UpdatePassword" title="Update Password" class="@thumbClassList">
 			<i class="bi bi-key fs-1 d-block"></i>Update Password
 		</a>

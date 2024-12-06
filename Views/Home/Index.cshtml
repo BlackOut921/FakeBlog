@@ -15,17 +15,28 @@
 	@if (Model.Count() > 0)
 	{
 		<h2 class="display-2">Recent Posts</h2>
-		<div class="row row-cols-2 row-cols-lg-4 row-gap-3">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 row-gap-3">
 			@foreach (FakeBlogModel blog in Model)
 			{
-				<div class="col">
-					@await Html.PartialAsync("_PartialBlogTile", blog)
-				</div>
+				if (blog.DateCreated.Month == DateTime.Now.Month)
+				{
+					//Posts this month
+					<div class="col">
+						@await Html.PartialAsync("_PartialBlogTile", blog)
+					</div>
+				}
+				else
+				{
+					//Older posts
+					<div class="col">
+						@await Html.PartialAsync("_PartialBlogTile", blog)
+					</div>
+				}
 			}
 		</div>
 	}
 	else
 	{
-		<p class="lead text-danger text-center">No new blogs this month</p>
+		<p class="lead text-danger text-center">No recent posts</p>
 	}
 }

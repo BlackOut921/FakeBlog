@@ -6,13 +6,6 @@
       "resourceId": null,
       "type": "mssql.onprem",
       "connectionId": "ConnectionStrings:Default"
-    },
-    "mssql2": {
-      "serviceConnectorResourceId": "",
-      "secretStore": "LocalSecretsFile",
-      "type": "mssql.onprem",
-      "connectionId": "ConnectionStrings:AzureDb",
-      "dynamicId": null
     }
   }
 }

@@ -14,6 +14,8 @@
 	</datalist>
 </form>
 
+<a href="#">Create new user</a>
+
 @if(Model != null)
 {
 	@if(Model.Count() > 0)
@@ -33,7 +35,7 @@
 						<td>
 							@if(@user.UserName != User.Identity?.Name)
 							{
-								<a href="#">Manage</a>
+								<a asp-controller="Admin" asp-action="EditUser" asp-route-username="@user.UserName">Edit</a>
 							}
 						</td>
 					</tr>

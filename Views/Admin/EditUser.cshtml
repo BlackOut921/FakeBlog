@@ -1,0 +1,26 @@
+﻿@using FakeBlog.Models.Account
+@model FakeBlogUserModel
+
+@{
+	ViewData["Title"] = "Edit User";
+}
+
+<h1 class="display-1">@ViewData["Title"]</h1>
+@if (Model != null)
+{
+	<p>@Model.Id</p>
+	<p>@Model.UserName</p>
+	<a href="#" class="btn btn-outline-danger">Delete user</a>
+}
+else
+{
+	<p class="text-danger">No user data</p>
+}
+
+<div class="border border-danger bg-light bg-opacity-50 p-2 text-danger">
+	<ul>
+		<li>Change role</li>
+		<li>Reset password?</li>
+		<li>Delete user</li>
+	</ul>
+</div>

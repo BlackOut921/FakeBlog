@@ -14,12 +14,13 @@ namespace FakeBlog.Controllers
 		private readonly FakeBlogDbContext fakeBlogDbContext = _fakeBlogDbContext;
 		private readonly UserManager<FakeBlogUserModel> userManager = _userManager;
 
-		public IActionResult Index() => View();
+		public IActionResult Index() => 
+			View();
 
-		public IActionResult UserManager()
-		{
-			IEnumerable<FakeBlogUserModel> accounts = this.userManager.Users.ToList();
-			return View(accounts);
-		}
-    }
+		public IActionResult UserManager() => 
+			View(this.userManager.Users.ToList());
+
+		public async Task<IActionResult> EditUser(string username) =>
+			View(await userManager.FindByNameAsync(username));
+	}
 }

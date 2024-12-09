@@ -1,0 +1,46 @@
+﻿@using FakeBlog.Models
+@using FakeBlog.Models.Blog
+@using FakeBlog.Models.Account
+@model FakeBlogSearchResult
+
+@{
+	ViewData["Title"] = "Search Result";
+}
+
+<h1 class="display-1">@ViewData["Title"]</h1>
+<p class="lead">Search results for: @Model.Query</p>
+
+@if (Model != null)
+{
+	<div class="container">
+		@if (Model.Posts?.Count() > 0)
+		{
+			<h2 class="display-2">Posts</h2>
+			@foreach (FakeBlogModel post in Model.Posts)
+			{
+				<div class="bg-light bg-opacity-75 p-2 mb-3">
+					<a asp-controller="Blog" asp-action="Read" asp-route-id="@post.BlogId" class="link-dark">
+						<h3 class="display-3">@post.Title</h3>
+					</a>
+					@if (!post.Anonymous)
+					{
+						<a asp-controller="Account" asp-action="Index" asp-route-id="@post.AuthorId" class="d-block">
+							@post.Author
+						</a>
+					}
+				</div>
+			}
+		}
+
+		@if (Model.Users?.Count() > 0)
+		{
+			<h2 class="display-2">Users</h2>
+			@foreach (FakeBlogUserModel user in Model.Users)
+			{
+				<div class="bg-light bg-opacity-75 p-2 mb-3">
+					<a asp-controller="Account" asp-action="Index" asp-route-id="@user.Id">@user.UserName</a>
+				</div>
+			}
+		}
+	</div>
+}

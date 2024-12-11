@@ -2,12 +2,23 @@
 	//
 }
 
-<nav class="bg-dark bg-opacity-75 p-3 text-light text-center h-100">
+<style>
+	nav {
+		flex: 0 0 10%; /* grow shrink basis */
+	}
+</style>
+
+<nav class="bg-dark p-3 text-light text-center h-100 position-sticky sticky-top">
 	<a asp-controller="Home" asp-action="Index" class="display-3 text-decoration-none link-light">FakeBlog</a>
-	<ul class="nav flex-row flex-lg-column justify-content-center text-center border-top mt-3">
+	<ul class="nav flex-row flex-md-column justify-content-center text-center border-top mt-3">
 		<li class="nav-item">
 			<a asp-controller="Home" asp-action="Index" class="nav-link link-light">
 				<i class="bi bi-house d-block"></i>Home
+			</a>
+		</li>
+		<li class="nav-item">
+			<a asp-controller="Home" asp-action="Search" class="nav-link link-light">
+				<i class="bi bi-search d-block"></i>Search
 			</a>
 		</li>
 		@if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -17,7 +28,7 @@
 					<i class="bi bi-person d-block"></i>My Profile
 				</a>
 			</li>
-			<li class="nav-item">
+			<li class="nav-item visually-hidden">
 				<a asp-controller="Blog" asp-action="Index" title="My Blogs" class="nav-link link-light">
 					<i class="bi bi-pen d-block"></i>My Blogs
 				</a>

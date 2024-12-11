@@ -15,5 +15,18 @@ namespace FakeBlog.Models
 
 		[DisplayName("Users")]
 		public IEnumerable<FakeBlogUserModel>? Users { get; set; }
+
+		public bool HasResult
+		{
+			get
+			{
+				return 
+					Query != string.Empty || 
+					Posts?.Count() > 0 || 
+					Users?.Count() > 0 ? 
+					true : 
+					false;
+			}
+		}
 	}
 }

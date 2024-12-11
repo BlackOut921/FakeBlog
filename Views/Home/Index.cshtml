@@ -1,6 +1,5 @@
-﻿@using FakeBlog.Models
-@using FakeBlog.Models.Blog
-@model FakeBlogSearchResult
+﻿@using FakeBlog.Models.Blog
+@model FakeBlog.Models.FakeBlogSearchResult
 
 @{
 	ViewData["Title"] = "Home Index";
@@ -11,17 +10,12 @@
 	<p class="lead">Database is hosted at <a href="http://webtest921.somee.com">webtest921.somee.com</a></p>
 </div>
 
-<form method="get" asp-controller="Home" asp-action="Search">
-	<input type="text" asp-for="@Model.Query" placeholder="Search for posts or users..." class="form-control mx-auto rounded-5" />
-	<input type="submit" value="Search" class="btn btn-dark visually-hidden" />
-</form>
-
-@if (Model != null)
+@if (Model != null && Model.HasResult)
 {
 	@if (Model.Posts?.Count() > 0)
 	{
 		<h2 class="display-2">Recent Posts</h2>
-		<div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 row-gap-3">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-gap-3">
 			@foreach (FakeBlogModel blog in Model.Posts)
 			{
 				if (blog.DateCreated.Month == DateTime.Now.Month)

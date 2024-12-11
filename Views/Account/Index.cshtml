@@ -40,8 +40,8 @@
 	@if (User.Identity?.Name == Model?.UserName)
 	{
 		<div class="text-center mb-3">
-			<a asp-controller="Blog" asp-action="Create" title="Create new blog" class="btn btn-dark">
-				<i class="bi bi-plus"></i> Create new
+			<a asp-controller="Blog" asp-action="Create" title="Create new blog" class="btn btn-dark rounded-0 p-3">
+				<i class="bi bi-plus d-block"></i>Create new
 			</a>
 		</div>
 	}
@@ -60,7 +60,7 @@ else
 				@if (!blog.Anonymous || blog.Author == User.Identity?.Name)
 				{
 					<a asp-controller="Blog" asp-action="Read" asp-route-id="@blog.BlogId"
-					   class="text-reset text-decoration-none shadow p-2 bg-light blog-hover-scale">
+					   class="text-reset text-decoration-none shadow p-2 bg-secondary-subtle blog-hover-scale">
 						<p>@blog.Title</p>
 						<p>@blog.Content</p>
 						<p>@blog.LastUpdated</p>

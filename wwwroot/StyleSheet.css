@@ -5,12 +5,12 @@ header {
 }
 
 body {
-    background-image: url("Images/AdobeStock_127455176.jpeg");
+    /*background-image: url("Images/AdobeStock_127455176.jpeg");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);*/
 }
 
 .blog-login-form {
@@ -49,4 +49,22 @@ body {
 
     .blog-hover-scale:hover {
         transform: scale(101%);
+    }
+
+/* BlogTile */
+.blog-tile {
+    transform: scale(100%);
+    min-height: 250px;
+    text-overflow: ellipsis;
+}
+
+    .blog-tile:hover {
+        transform: scale(101%);
+    }
+
+    .blog-tile p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }

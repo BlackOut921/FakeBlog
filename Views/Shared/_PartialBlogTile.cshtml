@@ -5,25 +5,13 @@
 	//
 }
 
-<style>
-	.blog-tile {
-		height: max(100px, 300px);
-		aspect-ratio: 1/1;
-		transform: scale(100%);
-	}
-
-		.blog-tile:hover {
-			transform: scale(101%);
-		}
-</style>
-
-<div class="bg-light p-2 shadow blog-tile">
-	<div class="h-100 d-flex flex-column">
-		<a asp-controller="Blog" asp-action="Read" asp-route-id="@Model.BlogId" 
+<div class="border bg-secondary-subtle p-2 shadow d-grid blog-tile">
+	<div class="d-flex flex-column">
+		<a asp-controller="Blog" asp-action="Read" asp-route-id="@Model.BlogId"
 		   class="link-dark link-underline-dark link-underline-opacity-0 link-underline-opacity-25-hover">
 			<h6 class="display-6 text-break">@Model.Title</h6>
+			<p class="lead overflow-hidden flex-fill">@Model.Content</p>
 		</a>
-		<p class="lead overflow-hidden flex-fill">@Model.Content</p>
 		<div class="d-flex flex-row">
 			@if (!Model.Anonymous)
 			{

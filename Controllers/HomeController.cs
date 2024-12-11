@@ -30,19 +30,26 @@ namespace FakeBlog.Controllers
 			return View(result);
 		}
 
+		[HttpGet]
+		public IActionResult Search() => View();
+
+		[HttpPost]
 		public IActionResult Search(FakeBlogSearchResult model)
 		{
 			FakeBlogSearchResult result = new();
 
-			result.Query = model.Query;
+			if(model.Query != string.Empty)
+			{
+				result.Query = model.Query;
 
-			result.Posts = fakeBlogDbContext.Blogs
-				.Where(i => i.Title.Contains(model.Query) || i.Content.Contains(model.Query))
-				.OrderBy(i => i.LastUpdated).Reverse();
+				result.Posts = fakeBlogDbContext.Blogs
+					.Where(i => i.Title.Contains(model.Query) || i.Content.Contains(model.Query))
+					.OrderBy(i => i.LastUpdated).Reverse();
 
-			result.Users = userManager.Users
-				.Where(i => i.UserName!.Contains(model.Query))
-				.OrderBy(i => i.UserName);
+				result.Users = userManager.Users
+					.Where(i => i.UserName!.Contains(model.Query))
+					.OrderBy(i => i.UserName);
+			}
 
 			return View(result);
 		}

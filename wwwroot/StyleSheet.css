@@ -4,15 +4,6 @@ header {
     backdrop-filter: blur(10px);
 }
 
-body {
-    /*background-image: url("Images/AdobeStock_127455176.jpeg");
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    backdrop-filter: blur(4px);*/
-}
-
 .blog-login-form {
     width: max(30%, 300px);
 }
